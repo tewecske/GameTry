@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var cave : TileMap = $Cave
-
+@onready var player_camera : Camera2D = $Player/Camera2D
 @export var noise_height_texture :  NoiseTexture2D
 
 const cave_layer : int = 0
@@ -10,11 +10,13 @@ const terrain_set : int = 0
 const terrain_id : int = 0
 const clear_terrain_id : int = -1
 
-const width : int = 100
-const height : int = 100
+const width : int = 300
+const height : int = 300
 
 var draw_dragging = false
 var clear_dragging = false
+
+var cave_tiles_array = []
 
 var noise : Noise
 
@@ -31,17 +33,21 @@ func generate_world():
 			TEST_noise_arr.append(noise_value)
 			if noise_value >= 0.0:
 				#cave.set_cell(cave_layer, Vector2i(x, y), source_id, Vector2i(3, 3))
-				cave.set_cells_terrain_connect(cave_layer, [Vector2i(x, y)], 0, 0, true)
+				cave_tiles_array.append(Vector2i(x, y))
 	print("highest ", TEST_noise_arr.max())
 	print("lowest ", TEST_noise_arr.min())
+	cave.set_cells_terrain_connect(cave_layer, cave_tiles_array, 0, 0, true)
 	
 
 func _process(delta):
 	pass
 
 func _input(event):
-	#var click_event = Input.is_action_just_pressed("click")
-	#var right_click_event = Input.is_action_just_pressed("rightclick")
+	if Input.is_action_just_pressed("zoom_in"):
+		player_camera.zoom += Vector2(0.1, 0.1)
+	if Input.is_action_just_pressed("zoom_out"):
+		player_camera.zoom -= Vector2(0.1, 0.1)
+	
 	if Input.is_action_pressed("click"):
 		draw_dragging = true
 		draw_tile_mouse()
@@ -102,3 +108,7 @@ func clearCellFromPosition(pos):
 	else:
 		print("Cell not found at ", pos)
 		
+
+
+func _on_player_collision_cave(collision_position):
+	cave.set_cells_terrain_connect(cave_layer, [collision_position], terrain_set, clear_terrain_id, true)

@@ -1,9 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8vjirleeswks"]
+[gd_scene load_steps=12 format=3 uid="uid://b8vjirleeswks"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0vtlg"]
-[ext_resource type="Texture2D" uid="uid://b7korln0fwbba" path="res://art/kenney_1-bit-pack/Tilesheet/monochrome-transparent.png" id="1_qbgqt"]
 [ext_resource type="Script" path="res://Player.gd" id="2_ltmqb"]
 [ext_resource type="Texture2D" uid="uid://cgfhcdqchmhnp" path="res://art/kenney_1-bit-pack/Tilesheet/cave.png" id="3_p1uki"]
+[ext_resource type="Texture2D" uid="uid://c703qnrxytayh" path="res://art/miner_boy_nearest_16.png" id="4_klh8m"]
 
 [sub_resource type="Gradient" id="Gradient_w0urt"]
 interpolation_mode = 1
@@ -158,22 +158,11 @@ terrain_set_0/terrain_0/name = "Cave2"
 terrain_set_0/terrain_0/color = Color(0.717129, 1.34766e-06, 0.369189, 1)
 sources/0 = SubResource("TileSetAtlasSource_kb0qs")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rtl8o"]
-atlas = ExtResource("1_qbgqt")
-region = Rect2(306, 119, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jnxqi"]
-atlas = ExtResource("1_qbgqt")
-region = Rect2(323, 119, 16, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_xfx5y"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rtl8o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jnxqi")
+"texture": ExtResource("4_klh8m")
 }],
 "loop": true,
 "name": &"idle",
@@ -196,7 +185,13 @@ layer_0/name = "Cave 0"
 position = Vector2(12, -12)
 script = ExtResource("2_ltmqb")
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-12, 12)
+zoom = Vector2(2.315, 2.315)
+position_smoothing_enabled = true
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xfx5y")
 animation = &"idle"
 
@@ -205,5 +200,4 @@ position = Vector2(0, 2.5)
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_81pfb")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3.035, 3.035)
+[connection signal="collision_cave" from="Player" to="." method="_on_player_collision_cave"]
