@@ -1,9 +1,18 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8vjirleeswks"]
+[gd_scene load_steps=31 format=3 uid="uid://b8vjirleeswks"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0vtlg"]
 [ext_resource type="Script" path="res://Player.gd" id="2_ltmqb"]
 [ext_resource type="Texture2D" uid="uid://cgfhcdqchmhnp" path="res://art/kenney_1-bit-pack/Tilesheet/cave.png" id="3_p1uki"]
-[ext_resource type="Texture2D" uid="uid://c703qnrxytayh" path="res://art/miner_boy_nearest_16.png" id="4_klh8m"]
+[ext_resource type="Texture2D" uid="uid://dcs2obgk6mhgq" path="res://art/TreasureHunter16x16/png/player/idle/idle1.png" id="4_tjp57"]
+[ext_resource type="Texture2D" uid="uid://blmute65b8io0" path="res://art/TreasureHunter16x16/png/player/idle/idle2.png" id="5_wqau6"]
+[ext_resource type="Texture2D" uid="uid://dt0spyu6aevgi" path="res://art/TreasureHunter16x16/png/player/idle/idle3.png" id="6_3ox8i"]
+[ext_resource type="Texture2D" uid="uid://cg0mw37a03mk5" path="res://art/TreasureHunter16x16/png/player/run/run1.png" id="7_7boq1"]
+[ext_resource type="Texture2D" uid="uid://1snpngyyp8b8" path="res://art/TreasureHunter16x16/png/player/run/run2.png" id="8_nwmam"]
+[ext_resource type="Texture2D" uid="uid://dm73cj36a45ed" path="res://art/TreasureHunter16x16/png/player/run/run3.png" id="9_6ekxm"]
+[ext_resource type="Texture2D" uid="uid://m27hvqgpq6ca" path="res://art/TreasureHunter16x16/png/player/run/run4.png" id="10_shqjy"]
+[ext_resource type="Texture2D" uid="uid://bhb2jokxm7a34" path="res://art/TreasureHunter16x16/png/player/run/run5.png" id="11_go7il"]
+[ext_resource type="Texture2D" uid="uid://bjarsjeayuyra" path="res://art/TreasureHunter16x16/png/player/run/run6.png" id="12_emxfh"]
+[ext_resource type="Texture2D" uid="uid://dil8mw8cxlgey" path="res://art/TreasureHunter16x16/png/objects/pickaxe.png" id="13_bkj4h"]
 
 [sub_resource type="Gradient" id="Gradient_w0urt"]
 interpolation_mode = 1
@@ -158,46 +167,207 @@ terrain_set_0/terrain_0/name = "Cave2"
 terrain_set_0/terrain_0/color = Color(0.717129, 1.34766e-06, 0.369189, 1)
 sources/0 = SubResource("TileSetAtlasSource_kb0qs")
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xfx5y"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_klh8m")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_81pfb"]
-size = Vector2(3.33333, 3)
+size = Vector2(2.66664, 4.66666)
+
+[sub_resource type="Animation" id="Animation_8njkv"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Miner:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_tjp57"), ExtResource("5_wqau6"), ExtResource("6_3ox8i")]
+}
+
+[sub_resource type="Animation" id="Animation_miobk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Miner:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_tjp57")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PickaxeNode/Pickaxe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.785398]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PickaxeNode/Pickaxe:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5.65685, 2.82843)]
+}
+
+[sub_resource type="Animation" id="Animation_vk6yt"]
+resource_name = "run"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Miner:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [ExtResource("7_7boq1"), ExtResource("8_nwmam"), ExtResource("9_6ekxm"), ExtResource("10_shqjy"), ExtResource("11_go7il"), ExtResource("12_emxfh")]
+}
+
+[sub_resource type="Animation" id="Animation_eg3hv"]
+resource_name = "mine"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PickaxeNode/Pickaxe:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.785398, 1.1781, 1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PickaxeNode/Pickaxe:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(5.65685, -2.38419e-07), Vector2(5.65685, 2.82843), Vector2(4.24264, 4.24264)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iky3u"]
+_data = {
+"RESET": SubResource("Animation_miobk"),
+"idle": SubResource("Animation_8njkv"),
+"mine": SubResource("Animation_eg3hv"),
+"run": SubResource("Animation_vk6yt")
+}
+
+[sub_resource type="Gradient" id="Gradient_yjyt4"]
+offsets = PackedFloat32Array(0, 0.986441)
+colors = PackedColorArray(0.384314, 0.211765, 0.0705882, 1, 0.101961, 0.0470588, 0.00392157, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8qvch"]
+frequency = 0.0065
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dws3n"]
+seamless = true
+color_ramp = SubResource("Gradient_yjyt4")
+noise = SubResource("FastNoiseLite_8qvch")
+
+[sub_resource type="Gradient" id="Gradient_m8sox"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.00338983, 0.701695)
+colors = PackedColorArray(0.490196, 0.596078, 0.203922, 0.545098, 0.501961, 0.592157, 0.215686, 0, 0.666667, 0.423529, 0.223529, 0.631373)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_il3p0"]
+noise_type = 0
+frequency = 0.0152
+fractal_type = 2
+fractal_lacunarity = 5.0
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d7eyh"]
+seamless = true
+color_ramp = SubResource("Gradient_m8sox")
+noise = SubResource("FastNoiseLite_il3p0")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_0vtlg")
 noise_height_texture = SubResource("NoiseTexture2D_o15ow")
 
 [node name="Cave" type="TileMap" parent="."]
+position = Vector2(0, -1)
 tile_set = SubResource("TileSet_6as0p")
 format = 2
 layer_0/name = "Cave 0"
+layer_0/modulate = Color(0.384314, 0.211765, 0.0705882, 1)
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(12, -12)
 script = ExtResource("2_ltmqb")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(-12, 12)
 zoom = Vector2(2.315, 2.315)
 position_smoothing_enabled = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_xfx5y")
-animation = &"idle"
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(0, 2.5)
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_81pfb")
 
+[node name="Miner" type="Sprite2D" parent="Player"]
+texture = ExtResource("4_tjp57")
+
+[node name="MinerAnimation" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_iky3u")
+}
+
+[node name="MinerAnimTree" type="AnimationTree" parent="Player"]
+anim_player = NodePath("../MinerAnimation")
+
+[node name="PickaxeNode" type="Node2D" parent="Player"]
+rotation = -0.785398
+
+[node name="Pickaxe" type="Sprite2D" parent="Player/PickaxeNode"]
+position = Vector2(5.65685, 2.82843)
+rotation = 0.785398
+texture = ExtResource("13_bkj4h")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(1024, 1024)
+transform = Transform2D(1, 0, 0, 1, 1024, 1024)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(512, 512)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
+offset_left = -526.0
+offset_top = -534.0
+offset_right = -14.0
+offset_bottom = -22.0
+texture = SubResource("NoiseTexture2D_dws3n")
+
+[node name="TextureRect2" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
+offset_left = -526.0
+offset_top = -534.0
+offset_right = -14.0
+offset_bottom = -22.0
+texture = SubResource("NoiseTexture2D_d7eyh")
+
+[connection signal="collision_ended" from="." to="Player" method="_on_game_collision_ended"]
 [connection signal="collision_cave" from="Player" to="." method="_on_player_collision_cave"]

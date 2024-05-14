@@ -4,14 +4,16 @@ extends Node2D
 @onready var player_camera : Camera2D = $Player/Camera2D
 @export var noise_height_texture :  NoiseTexture2D
 
+signal collision_ended
+
 const cave_layer : int = 0
 const source_id : int = 0
 const terrain_set : int = 0
 const terrain_id : int = 0
 const clear_terrain_id : int = -1
 
-const width : int = 300
-const height : int = 300
+const width : int = 200
+const height : int = 200
 
 var draw_dragging = false
 var clear_dragging = false
@@ -109,6 +111,33 @@ func clearCellFromPosition(pos):
 		print("Cell not found at ", pos)
 		
 
+var hps = {}
 
-func _on_player_collision_cave(collision_position):
-	cave.set_cells_terrain_connect(cave_layer, [collision_position], terrain_set, clear_terrain_id, true)
+func _on_player_collision_cave(local_player_position: Vector2i, collision_position: Vector2i, collision_normal: Vector2i):
+	print("local player position " + str(local_player_position))
+	var local_collision_position = cave.local_to_map(collision_position)
+	print("local collision_position " + str(local_collision_position))
+	print("collision_normal " + str(collision_normal))
+
+	#var collision_update = local_player_position - Vector2i(collision_normal)
+	var collision_update = local_player_position - Vector2i(collision_normal)
+
+	#var collision_tile = cave.get_cell_tile_data(0, local_collision_position)
+	var collision_tile = cave.get_cell_tile_data(0, collision_update)
+	
+	if collision_tile:
+		var hp = hps.get(collision_update, 2)
+		print(str(hp))
+		if hp > 0:
+			print("damage")
+			hps[collision_update] = hp - 1
+		else:
+			print("clear")
+			hps.erase(collision_update)
+			cave.set_cells_terrain_connect(cave_layer, [collision_update], terrain_set, clear_terrain_id, true)
+	
+	await get_tree().create_timer(0.2).timeout
+	emit_signal("collision_ended")
+	
+	
+	
