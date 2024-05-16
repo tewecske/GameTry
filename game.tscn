@@ -1,7 +1,8 @@
-[gd_scene load_steps=31 format=3 uid="uid://b8vjirleeswks"]
+[gd_scene load_steps=33 format=3 uid="uid://b8vjirleeswks"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0vtlg"]
 [ext_resource type="Script" path="res://Player.gd" id="2_ltmqb"]
+[ext_resource type="Script" path="res://Cave.gd" id="3_1fyn8"]
 [ext_resource type="Texture2D" uid="uid://cgfhcdqchmhnp" path="res://art/kenney_1-bit-pack/Tilesheet/cave.png" id="3_p1uki"]
 [ext_resource type="Texture2D" uid="uid://dcs2obgk6mhgq" path="res://art/TreasureHunter16x16/png/player/idle/idle1.png" id="4_tjp57"]
 [ext_resource type="Texture2D" uid="uid://blmute65b8io0" path="res://art/TreasureHunter16x16/png/player/idle/idle2.png" id="5_wqau6"]
@@ -13,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bhb2jokxm7a34" path="res://art/TreasureHunter16x16/png/player/run/run5.png" id="11_go7il"]
 [ext_resource type="Texture2D" uid="uid://bjarsjeayuyra" path="res://art/TreasureHunter16x16/png/player/run/run6.png" id="12_emxfh"]
 [ext_resource type="Texture2D" uid="uid://dil8mw8cxlgey" path="res://art/TreasureHunter16x16/png/objects/pickaxe.png" id="13_bkj4h"]
+[ext_resource type="PackedScene" uid="uid://di881wychamqp" path="res://hud.tscn" id="14_rmd7w"]
 
 [sub_resource type="Gradient" id="Gradient_w0urt"]
 interpolation_mode = 1
@@ -170,21 +172,6 @@ sources/0 = SubResource("TileSetAtlasSource_kb0qs")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_81pfb"]
 size = Vector2(2.66664, 4.66666)
 
-[sub_resource type="Animation" id="Animation_8njkv"]
-resource_name = "idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Miner:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [ExtResource("4_tjp57"), ExtResource("5_wqau6"), ExtResource("6_3ox8i")]
-}
-
 [sub_resource type="Animation" id="Animation_miobk"]
 length = 0.001
 tracks/0/type = "value"
@@ -224,9 +211,8 @@ tracks/2/keys = {
 "values": [Vector2(5.65685, 2.82843)]
 }
 
-[sub_resource type="Animation" id="Animation_vk6yt"]
-resource_name = "run"
-length = 0.5
+[sub_resource type="Animation" id="Animation_8njkv"]
+resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -234,10 +220,10 @@ tracks/0/path = NodePath("Miner:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [ExtResource("7_7boq1"), ExtResource("8_nwmam"), ExtResource("9_6ekxm"), ExtResource("10_shqjy"), ExtResource("11_go7il"), ExtResource("12_emxfh")]
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_tjp57"), ExtResource("5_wqau6"), ExtResource("6_3ox8i")]
 }
 
 [sub_resource type="Animation" id="Animation_eg3hv"]
@@ -267,6 +253,22 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(5.65685, -2.38419e-07), Vector2(5.65685, 2.82843), Vector2(4.24264, 4.24264)]
+}
+
+[sub_resource type="Animation" id="Animation_vk6yt"]
+resource_name = "run"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Miner:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [ExtResource("7_7boq1"), ExtResource("8_nwmam"), ExtResource("9_6ekxm"), ExtResource("10_shqjy"), ExtResource("11_go7il"), ExtResource("12_emxfh")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iky3u"]
@@ -316,9 +318,11 @@ tile_set = SubResource("TileSet_6as0p")
 format = 2
 layer_0/name = "Cave 0"
 layer_0/modulate = Color(0.384314, 0.211765, 0.0705882, 1)
+script = ExtResource("3_1fyn8")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("2_ltmqb")
+metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2.315, 2.315)
@@ -369,5 +373,8 @@ offset_right = -14.0
 offset_bottom = -22.0
 texture = SubResource("NoiseTexture2D_d7eyh")
 
+[node name="HUD" parent="." instance=ExtResource("14_rmd7w")]
+
 [connection signal="collision_ended" from="." to="Player" method="_on_game_collision_ended"]
 [connection signal="collision_cave" from="Player" to="." method="_on_player_collision_cave"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://di881wychamqp"]
+
+[ext_resource type="Script" path="res://HUD.gd" id="1_tmhdx"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_tmhdx")
+
+[node name="Title" type="Label" parent="."]
+offset_left = 84.0
+offset_top = 18.0
+offset_right = 161.0
+offset_bottom = 41.0
+text = "Chill Mine"
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 97.0
+offset_top = 116.0
+offset_right = 143.0
+offset_bottom = 147.0
+text = "Start"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

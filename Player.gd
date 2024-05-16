@@ -11,9 +11,14 @@ var in_collision = false
 
 const SPEED = 100.0
 
+func start(pos):
+	position = pos
+	show()
+
 func _ready():
 	minerAnimation.play("idle")
 	pickaxe.hide()
+	hide()
 
 var last_velocity = Vector2(0.0, 0.0)
 

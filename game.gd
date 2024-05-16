@@ -25,8 +25,13 @@ var noise : Noise
 var TEST_noise_arr = []
 
 func _ready():
+	pass
+
+func new_game():
+	$Player.start(Vector2(0, 0))
 	noise = noise_height_texture.noise
 	generate_world()
+	cave.show()
 
 func generate_world():
 	for x in range(-width / 2, width / 2):
