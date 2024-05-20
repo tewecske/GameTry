@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b8vjirleeswks"]
+[gd_scene load_steps=36 format=3 uid="uid://b8vjirleeswks"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0vtlg"]
 [ext_resource type="Script" path="res://Player.gd" id="2_ltmqb"]
@@ -287,6 +287,8 @@ colors = PackedColorArray(0.384314, 0.211765, 0.0705882, 1, 0.101961, 0.0470588,
 frequency = 0.0065
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dws3n"]
+width = 1280
+height = 720
 seamless = true
 color_ramp = SubResource("Gradient_yjyt4")
 noise = SubResource("FastNoiseLite_8qvch")
@@ -304,9 +306,29 @@ fractal_lacunarity = 5.0
 fractal_weighted_strength = 1.0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d7eyh"]
+width = 1280
+height = 720
 seamless = true
 color_ramp = SubResource("Gradient_m8sox")
 noise = SubResource("FastNoiseLite_il3p0")
+
+[sub_resource type="LabelSettings" id="LabelSettings_uui3s"]
+font_size = 7
+
+[sub_resource type="LabelSettings" id="LabelSettings_g1x1y"]
+font_size = 7
+
+[sub_resource type="Environment" id="Environment_kqsks"]
+background_mode = 3
+glow_enabled = true
+glow_levels/3 = 0.0
+glow_levels/5 = 1.01
+glow_levels/6 = 2.83
+glow_blend_mode = 1
+glow_hdr_threshold = 0.15
+adjustment_enabled = true
+adjustment_brightness = 1.05
+adjustment_contrast = 1.04
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_0vtlg")
@@ -321,6 +343,7 @@ layer_0/modulate = Color(0.384314, 0.211765, 0.0705882, 1)
 script = ExtResource("3_1fyn8")
 
 [node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(326, 175)
 script = ExtResource("2_ltmqb")
 metadata/_edit_group_ = true
 
@@ -352,12 +375,12 @@ rotation = 0.785398
 texture = ExtResource("13_bkj4h")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-offset = Vector2(1024, 1024)
-transform = Transform2D(1, 0, 0, 1, 1024, 1024)
+offset = Vector2(500, 500)
+transform = Transform2D(1, 0, 0, 1, 500, 500)
+scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.8, 0.8)
-motion_mirroring = Vector2(512, 512)
+motion_mirroring = Vector2(1280, 720)
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
 offset_left = -526.0
@@ -371,10 +394,42 @@ offset_left = -526.0
 offset_top = -534.0
 offset_right = -14.0
 offset_bottom = -22.0
+size_flags_vertical = 4
 texture = SubResource("NoiseTexture2D_d7eyh")
 
 [node name="HUD" parent="." instance=ExtResource("14_rmd7w")]
 
+[node name="Title" parent="HUD" index="0"]
+offset_left = 288.0
+offset_top = 102.0
+offset_right = 365.0
+offset_bottom = 125.0
+
+[node name="StartButton" parent="HUD" index="1"]
+offset_left = 303.0
+offset_top = 207.0
+offset_right = 349.0
+offset_bottom = 238.0
+
+[node name="PlayerPos" parent="HUD/Debug" index="0"]
+offset_left = -59.0
+offset_top = -2.0
+offset_right = 38.0
+offset_bottom = 21.0
+label_settings = SubResource("LabelSettings_uui3s")
+
+[node name="FPS" parent="HUD/Debug" index="1"]
+offset_left = -217.0
+offset_top = 18.0
+offset_right = -177.0
+offset_bottom = 41.0
+label_settings = SubResource("LabelSettings_g1x1y")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kqsks")
+
 [connection signal="collision_ended" from="." to="Player" method="_on_game_collision_ended"]
 [connection signal="collision_cave" from="Player" to="." method="_on_player_collision_cave"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
+
+[editable path="HUD"]

@@ -24,6 +24,8 @@ var noise : Noise
 
 var TEST_noise_arr = []
 
+
+
 func _ready():
 	pass
 
@@ -47,7 +49,15 @@ func generate_world():
 	
 
 func _process(delta):
-	pass
+	var player_position = $Player.position
+	var player_global_position = $Player.global_position
+	var cave_to_local = cave.to_local(player_global_position)
+	var cave_local_to_map = cave.local_to_map(cave_to_local)
+	#print("player_position: " + str(player_position) +
+	 #" player_global_position: " + str(player_global_position) +
+	 #" cave_to_local: " + str(cave_to_local) +
+	 #" cave_local_to_map: " + str(cave_local_to_map))
+	Global.player_location = cave_local_to_map
 
 func _input(event):
 	if Input.is_action_just_pressed("zoom_in"):

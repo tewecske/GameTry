@@ -1,22 +1,61 @@
-[gd_scene load_steps=2 format=3 uid="uid://di881wychamqp"]
+[gd_scene load_steps=5 format=3 uid="uid://di881wychamqp"]
 
 [ext_resource type="Script" path="res://HUD.gd" id="1_tmhdx"]
+[ext_resource type="Script" path="res://Debug.gd" id="2_322jx"]
+[ext_resource type="Script" path="res://FPS.gd" id="3_gvfpf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i2cvi"]
+font_size = 10
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_tmhdx")
 
 [node name="Title" type="Label" parent="."]
-offset_left = 84.0
-offset_top = 18.0
-offset_right = 161.0
-offset_bottom = 41.0
+offset_left = 258.0
+offset_top = 84.0
+offset_right = 335.0
+offset_bottom = 107.0
+size_flags_horizontal = 4
 text = "Chill Mine"
 
 [node name="StartButton" type="Button" parent="."]
-offset_left = 97.0
-offset_top = 116.0
-offset_right = 143.0
-offset_bottom = 147.0
+offset_left = 283.0
+offset_top = 180.0
+offset_right = 329.0
+offset_bottom = 211.0
 text = "Start"
+
+[node name="Debug" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 406.0
+offset_top = 80.0
+offset_right = 446.0
+offset_bottom = 120.0
+script = ExtResource("2_322jx")
+
+[node name="PlayerPos" type="Label" parent="Debug"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -11.5
+offset_right = 56.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Player pos: 0,0"
+label_settings = SubResource("LabelSettings_i2cvi")
+
+[node name="FPS" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = -240.0
+offset_top = 5.0
+offset_right = -200.0
+offset_bottom = 28.0
+script = ExtResource("3_gvfpf")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
