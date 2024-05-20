@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://di881wychamqp"]
+[gd_scene load_steps=6 format=3 uid="uid://di881wychamqp"]
 
 [ext_resource type="Script" path="res://HUD.gd" id="1_tmhdx"]
 [ext_resource type="Script" path="res://Debug.gd" id="2_322jx"]
@@ -7,31 +7,20 @@
 [sub_resource type="LabelSettings" id="LabelSettings_i2cvi"]
 font_size = 10
 
+[sub_resource type="LabelSettings" id="LabelSettings_70r33"]
+font_size = 10
+
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_tmhdx")
 
-[node name="Title" type="Label" parent="."]
-offset_left = 258.0
-offset_top = 84.0
-offset_right = 335.0
-offset_bottom = 107.0
-size_flags_horizontal = 4
-text = "Chill Mine"
-
-[node name="StartButton" type="Button" parent="."]
-offset_left = 283.0
-offset_top = 180.0
-offset_right = 329.0
-offset_bottom = 211.0
-text = "Start"
-
 [node name="Debug" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_left = 406.0
-offset_top = 80.0
-offset_right = 446.0
-offset_bottom = 120.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
 script = ExtResource("2_322jx")
 
 [node name="PlayerPos" type="Label" parent="Debug"]
@@ -41,21 +30,111 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -56.0
-offset_top = -11.5
-offset_right = 56.0
-offset_bottom = 11.5
+offset_left = -22.5
+offset_top = -7.0
+offset_right = 22.5
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Player pos: 0,0"
+text = "0,0"
 label_settings = SubResource("LabelSettings_i2cvi")
 
 [node name="FPS" type="Label" parent="Debug"]
-layout_mode = 0
-offset_left = -240.0
-offset_top = 5.0
-offset_right = -200.0
-offset_bottom = 28.0
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
 script = ExtResource("3_gvfpf")
+
+[node name="PlayerUp" type="Label" parent="Debug"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -50.0
+offset_right = 20.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0,-1
+0,0"
+label_settings = SubResource("LabelSettings_70r33")
+
+[node name="PlayerRight" type="Label" parent="Debug"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 30.0
+offset_top = -15.5
+offset_right = 70.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0,-1
+0,0"
+label_settings = SubResource("LabelSettings_70r33")
+
+[node name="PlayerDown" type="Label" parent="Debug"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0,-1
+0,0"
+label_settings = SubResource("LabelSettings_70r33")
+
+[node name="PlayerLeft" type="Label" parent="Debug"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -15.5
+offset_right = -30.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0,-1
+0,0"
+label_settings = SubResource("LabelSettings_70r33")
+
+[node name="Title" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 50.0
+offset_bottom = 73.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+text = "Chill Mine"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -15.5
+offset_right = 23.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start"
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

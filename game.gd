@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var player : CharacterBody2D = $Player
 @onready var cave : TileMap = $Cave
 @onready var player_camera : Camera2D = $Player/Camera2D
 @export var noise_height_texture :  NoiseTexture2D
@@ -30,7 +31,7 @@ func _ready():
 	pass
 
 func new_game():
-	$Player.start(Vector2(0, 0))
+	player.start(Vector2(0, 0))
 	noise = noise_height_texture.noise
 	generate_world()
 	cave.show()
@@ -40,7 +41,7 @@ func generate_world():
 		for y in range(-height / 2, height / 2):
 			var noise_value : float = noise.get_noise_2d(x, y)
 			TEST_noise_arr.append(noise_value)
-			if noise_value >= 0.0:
+			if noise_value >= -0.2:
 				#cave.set_cell(cave_layer, Vector2i(x, y), source_id, Vector2i(3, 3))
 				cave_tiles_array.append(Vector2i(x, y))
 	print("highest ", TEST_noise_arr.max())
@@ -49,8 +50,8 @@ func generate_world():
 	
 
 func _process(delta):
-	var player_position = $Player.position
-	var player_global_position = $Player.global_position
+	var player_position = player.position
+	var player_global_position = player.global_position
 	var cave_to_local = cave.to_local(player_global_position)
 	var cave_local_to_map = cave.local_to_map(cave_to_local)
 	#print("player_position: " + str(player_position) +
@@ -58,6 +59,19 @@ func _process(delta):
 	 #" cave_to_local: " + str(cave_to_local) +
 	 #" cave_local_to_map: " + str(cave_local_to_map))
 	Global.player_location = cave_local_to_map
+	Global.player_up = cave_local_to_map + Vector2i.UP
+	Global.player_up_atlas = get_tile_contents(Global.player_up)
+	Global.player_right = cave_local_to_map + Vector2i.RIGHT
+	Global.player_right_atlas = get_tile_contents(Global.player_right)
+	Global.player_down = cave_local_to_map + Vector2i.DOWN
+	Global.player_down_atlas = get_tile_contents(Global.player_down)
+	Global.player_left = cave_local_to_map + Vector2i.LEFT
+	Global.player_left_atlas = get_tile_contents(Global.player_left)
+	
+func get_tile_contents(index: Vector2i):
+	return cave.get_cell_atlas_coords(0, index)
+
+
 
 func _input(event):
 	if Input.is_action_just_pressed("zoom_in"):

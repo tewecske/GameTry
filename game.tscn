@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://b8vjirleeswks"]
+[gd_scene load_steps=34 format=3 uid="uid://b8vjirleeswks"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0vtlg"]
 [ext_resource type="Script" path="res://Player.gd" id="2_ltmqb"]
@@ -23,7 +23,7 @@ colors = PackedColorArray(0, 0, 0.741176, 1, 1, 1, 0.196078, 1, 0.247059, 1, 0.3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vre1h"]
 seed = 1
-frequency = 0.1964
+frequency = 0.4
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o15ow"]
 width = 256
@@ -312,12 +312,6 @@ seamless = true
 color_ramp = SubResource("Gradient_m8sox")
 noise = SubResource("FastNoiseLite_il3p0")
 
-[sub_resource type="LabelSettings" id="LabelSettings_uui3s"]
-font_size = 7
-
-[sub_resource type="LabelSettings" id="LabelSettings_g1x1y"]
-font_size = 7
-
 [sub_resource type="Environment" id="Environment_kqsks"]
 background_mode = 3
 glow_enabled = true
@@ -351,7 +345,11 @@ metadata/_edit_group_ = true
 zoom = Vector2(2.315, 2.315)
 position_smoothing_enabled = true
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
+polygon = PackedVector2Array(2, -9, -1, -8, -2, -3, -4, -3, -5, 1, -4, 5, 0, 7, 3, 4, 5, 0, 4, -3, 4, -8)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+visible = false
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_81pfb")
 
@@ -399,37 +397,9 @@ texture = SubResource("NoiseTexture2D_d7eyh")
 
 [node name="HUD" parent="." instance=ExtResource("14_rmd7w")]
 
-[node name="Title" parent="HUD" index="0"]
-offset_left = 288.0
-offset_top = 102.0
-offset_right = 365.0
-offset_bottom = 125.0
-
-[node name="StartButton" parent="HUD" index="1"]
-offset_left = 303.0
-offset_top = 207.0
-offset_right = 349.0
-offset_bottom = 238.0
-
-[node name="PlayerPos" parent="HUD/Debug" index="0"]
-offset_left = -59.0
-offset_top = -2.0
-offset_right = 38.0
-offset_bottom = 21.0
-label_settings = SubResource("LabelSettings_uui3s")
-
-[node name="FPS" parent="HUD/Debug" index="1"]
-offset_left = -217.0
-offset_top = 18.0
-offset_right = -177.0
-offset_bottom = 41.0
-label_settings = SubResource("LabelSettings_g1x1y")
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kqsks")
 
 [connection signal="collision_ended" from="." to="Player" method="_on_game_collision_ended"]
 [connection signal="collision_cave" from="Player" to="." method="_on_player_collision_cave"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
-
-[editable path="HUD"]

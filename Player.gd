@@ -58,6 +58,7 @@ func _physics_process(delta):
 			var local_player_position = cave.local_to_map(position)
 			print("player local player position " + str(position) + str(local_player_position))
 			var collider = collision.get_collider()
+			print("collider: " + collider.get_class().get_basename())
 			var collision_normal : Vector2 = collision.get_normal()
 			var collision_position : Vector2 = collision.get_position()
 			
