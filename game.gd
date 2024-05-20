@@ -157,19 +157,18 @@ func _on_player_collision_cave(local_player_position: Vector2i, collision_positi
 	
 	#if collision_tile and Global.player_direction == Global.player_location - Global.player_collision_position:
 	if collision_tile and Global.player_direction == Global.player_collision_normal * -1:
-		player.mine_animation()
-		var hp = hps.get(collision_update, 2)
-		print(str(hp))
-		if hp > 0:
-			print("damage")
-			hps[collision_update] = hp - 1
-		else:
-			print("clear")
-			hps.erase(collision_update)
-			cave.set_cells_terrain_connect(cave_layer, [collision_update], terrain_set, clear_terrain_id, true)
-	
-	#await get_tree().create_timer(0.2).timeout
+		player.mine_animation(collision_update)
 	emit_signal("collision_ended")
 	
-	
+
+
+func _on_player_mining_ended(mined_tile: Vector2i) -> void:
+	print("mining ended")
+	var hp = hps.get(mined_tile, 1)
+	print(str(hp))
+	if hp > 0:
+		hps[mined_tile] = hp - 1
+	else:
+		hps.erase(mined_tile)
+		cave.set_cells_terrain_connect(cave_layer, [mined_tile], terrain_set, clear_terrain_id, true)
 	

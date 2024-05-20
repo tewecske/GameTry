@@ -128,7 +128,7 @@ texture = ExtResource("3_p1uki")
 0:3/0/terrain = 0
 0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:3/0/physics_layer_0/angular_velocity = 0.0
-0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2.375, -2.875, -8, 8, -8, 8, 8, -3, 8, -8, 3.125)
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:3/0/terrains_peering_bit/right_side = 0
 1:3/0 = 0
 1:3/0/terrain_set = 0
@@ -248,6 +248,7 @@ environment = SubResource("Environment_kqsks")
 
 [connection signal="collision_ended" from="." to="Player" method="_on_game_collision_ended"]
 [connection signal="collision_cave" from="Player" to="." method="_on_player_collision_cave"]
+[connection signal="mining_ended" from="Player" to="." method="_on_player_mining_ended"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 
 [editable path="Player"]
