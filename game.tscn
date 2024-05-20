@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://b8vjirleeswks"]
+[gd_scene load_steps=19 format=3 uid="uid://b8vjirleeswks"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0vtlg"]
 [ext_resource type="Script" path="res://Cave.gd" id="3_1fyn8"]
 [ext_resource type="Texture2D" uid="uid://cgfhcdqchmhnp" path="res://art/kenney_1-bit-pack/Tilesheet/cave.png" id="3_p1uki"]
 [ext_resource type="PackedScene" uid="uid://dykqk8c5601jm" path="res://player.tscn" id="4_4xp8w"]
+[ext_resource type="PackedScene" uid="uid://d3she30v4ixhv" path="res://boom.tscn" id="6_mgady"]
 [ext_resource type="PackedScene" uid="uid://di881wychamqp" path="res://hud.tscn" id="14_rmd7w"]
 
 [sub_resource type="Gradient" id="Gradient_w0urt"]
@@ -246,9 +247,12 @@ texture = SubResource("NoiseTexture2D_d7eyh")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kqsks")
 
+[node name="Boom" parent="." instance=ExtResource("6_mgady")]
+
 [connection signal="collision_ended" from="." to="Player" method="_on_game_collision_ended"]
 [connection signal="collision_cave" from="Player" to="." method="_on_player_collision_cave"]
 [connection signal="mining_ended" from="Player" to="." method="_on_player_mining_ended"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 
 [editable path="Player"]
+[editable path="Boom"]

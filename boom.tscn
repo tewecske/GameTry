@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3she30v4ixhv"]
+
+[sub_resource type="Curve" id="Curve_e5dpn"]
+_data = [Vector2(0, 0.954798), 0.0, -0.0876912, 0, 0, Vector2(1, 0), -3.46549, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vgqb4"]
+curve = SubResource("Curve_e5dpn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dgij7"]
+lifetime_randomness = 0.25
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(6, 6, 0)
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 50, 0)
+radial_accel_min = 5.0
+radial_accel_max = 10.0
+scale_max = 2.0
+alpha_curve = SubResource("CurveTexture_vgqb4")
+
+[sub_resource type="Gradient" id="Gradient_nccvi"]
+offsets = PackedFloat32Array(0, 0.562712, 1)
+colors = PackedColorArray(0.133097, 0.0731409, 0.0228423, 1, 0, 0, 0, 1, 0.397617, 0.279585, 0.0240812, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l2w0o"]
+frequency = 0.0554
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bosu8"]
+width = 2
+height = 2
+color_ramp = SubResource("Gradient_nccvi")
+noise = SubResource("FastNoiseLite_l2w0o")
+
+[node name="Boom" type="GPUParticles2D"]
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_dgij7")
+texture = SubResource("NoiseTexture2D_bosu8")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0

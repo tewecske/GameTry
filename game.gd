@@ -3,7 +3,10 @@ extends Node2D
 @onready var player : CharacterBody2D = $Player
 @onready var cave : TileMap = $Cave
 @onready var player_camera : Camera2D = $Player/Camera2D
+@onready var boom :  GPUParticles2D = $Boom
+
 @export var noise_height_texture :  NoiseTexture2D
+
 
 signal collision_ended
 
@@ -13,8 +16,8 @@ const terrain_set : int = 0
 const terrain_id : int = 0
 const clear_terrain_id : int = -1
 
-const width : int = 200
-const height : int = 200
+const width : int = 100
+const height : int = 100
 
 var draw_dragging = false
 var clear_dragging = false
@@ -142,6 +145,7 @@ func clearCellFromPosition(pos):
 		
 
 var hps = {}
+var dmgs = {}
 
 func _on_player_collision_cave(local_player_position: Vector2i, collision_position: Vector2i, collision_normal: Vector2i):
 	#print("local player position " + str(local_player_position))
@@ -161,14 +165,27 @@ func _on_player_collision_cave(local_player_position: Vector2i, collision_positi
 	emit_signal("collision_ended")
 	
 
+var damage_scene = preload("res://damage.tscn")
 
 func _on_player_mining_ended(mined_tile: Vector2i) -> void:
-	print("mining ended")
-	var hp = hps.get(mined_tile, 1)
+	var hp = hps.get(mined_tile, 2)
 	print(str(hp))
 	if hp > 0:
 		hps[mined_tile] = hp - 1
+		var dmg = dmgs.get(mined_tile, damage_scene.instantiate())
+		dmg.setup(mined_tile, hp)
+		print(str(dmg))
+		add_child(dmg)
+		dmgs[mined_tile] = dmg
 	else:
+		var dmg = dmgs[mined_tile]
+		dmg.hide()
+		remove_child(dmg)
+		dmg.queue_free()
+		boom.set_global_position((mined_tile * 16) + Vector2i(8, 8))
+		#boom.set_global_position(player.position)
+		boom.show()
+		boom.restart()
 		hps.erase(mined_tile)
 		cave.set_cells_terrain_connect(cave_layer, [mined_tile], terrain_set, clear_terrain_id, true)
 	

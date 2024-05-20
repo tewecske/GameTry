@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmu1dywuwtdv4"]
+
+[ext_resource type="Script" path="res://damage.gd" id="1_3sw0b"]
+
+[sub_resource type="Gradient" id="Gradient_n3rss"]
+resource_local_to_scene = true
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.644068)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qxxjd"]
+resource_local_to_scene = true
+seed = 585
+frequency = 0.3427
+fractal_lacunarity = 4.0
+fractal_gain = 2.0
+fractal_ping_pong_strength = 10.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s41l8"]
+resource_local_to_scene = true
+width = 16
+height = 16
+color_ramp = SubResource("Gradient_n3rss")
+noise = SubResource("FastNoiseLite_qxxjd")
+
+[node name="damage" type="TextureRect"]
+offset_right = 16.0
+offset_bottom = 16.0
+texture = SubResource("NoiseTexture2D_s41l8")
+expand_mode = 1
+script = ExtResource("1_3sw0b")
