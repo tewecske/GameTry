@@ -58,15 +58,16 @@ func _process(delta):
 	 #" player_global_position: " + str(player_global_position) +
 	 #" cave_to_local: " + str(cave_to_local) +
 	 #" cave_local_to_map: " + str(cave_local_to_map))
-	Global.player_location = cave_local_to_map
-	Global.player_up = cave_local_to_map + Vector2i.UP
-	Global.player_up_atlas = get_tile_contents(Global.player_up)
-	Global.player_right = cave_local_to_map + Vector2i.RIGHT
-	Global.player_right_atlas = get_tile_contents(Global.player_right)
-	Global.player_down = cave_local_to_map + Vector2i.DOWN
-	Global.player_down_atlas = get_tile_contents(Global.player_down)
-	Global.player_left = cave_local_to_map + Vector2i.LEFT
-	Global.player_left_atlas = get_tile_contents(Global.player_left)
+	if Global.debug:
+		Global.player_location = cave_local_to_map
+		Global.player_up = cave_local_to_map + Vector2i.UP
+		Global.player_up_atlas = get_tile_contents(Global.player_up)
+		Global.player_right = cave_local_to_map + Vector2i.RIGHT
+		Global.player_right_atlas = get_tile_contents(Global.player_right)
+		Global.player_down = cave_local_to_map + Vector2i.DOWN
+		Global.player_down_atlas = get_tile_contents(Global.player_down)
+		Global.player_left = cave_local_to_map + Vector2i.LEFT
+		Global.player_left_atlas = get_tile_contents(Global.player_left)
 	
 func get_tile_contents(index: Vector2i):
 	return cave.get_cell_atlas_coords(0, index)
@@ -143,10 +144,10 @@ func clearCellFromPosition(pos):
 var hps = {}
 
 func _on_player_collision_cave(local_player_position: Vector2i, collision_position: Vector2i, collision_normal: Vector2i):
-	print("local player position " + str(local_player_position))
+	#print("local player position " + str(local_player_position))
 	var local_collision_position = cave.local_to_map(collision_position)
-	print("local collision_position " + str(local_collision_position))
-	print("collision_normal " + str(collision_normal))
+	#print("local collision_position " + str(local_collision_position))
+	#print("collision_normal " + str(collision_normal))
 
 	#var collision_update = local_player_position - Vector2i(collision_normal)
 	var collision_update = local_player_position - Vector2i(collision_normal)
@@ -154,7 +155,8 @@ func _on_player_collision_cave(local_player_position: Vector2i, collision_positi
 	#var collision_tile = cave.get_cell_tile_data(0, local_collision_position)
 	var collision_tile = cave.get_cell_tile_data(0, collision_update)
 	
-	if collision_tile:
+	#if collision_tile and Global.player_direction == Global.player_location - Global.player_collision_position:
+	if collision_tile and Global.player_direction == Global.player_collision_normal * -1:
 		var hp = hps.get(collision_update, 2)
 		print(str(hp))
 		if hp > 0:
@@ -165,7 +167,7 @@ func _on_player_collision_cave(local_player_position: Vector2i, collision_positi
 			hps.erase(collision_update)
 			cave.set_cells_terrain_connect(cave_layer, [collision_update], terrain_set, clear_terrain_id, true)
 	
-	await get_tree().create_timer(0.2).timeout
+	#await get_tree().create_timer(0.2).timeout
 	emit_signal("collision_ended")
 	
 	

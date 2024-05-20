@@ -8,7 +8,14 @@ extends Control
 @onready var fps = $FPS
 
 func update():
-	playerPos.text = str(Global.player_location)
+	playerPos.text = \
+	 "Location:  " + str(Global.player_location) + "\n" + \
+	 "Direction: " + str(Global.player_direction) + "\n" + \
+	 "Collcheck: " + str(Global.player_location - Global.player_collision_position) + "\n" + \
+	 "Velocity:  " + str(Global.player_velocity) + "\n" + \
+	 "Collision: " + str(Global.player_collision_position) + "\n" + \
+	 "Normal:    " + str(Global.player_collision_normal)
+	
 	playerUp.text = vecsToString(Global.player_up, Global.player_up_atlas)
 	playerRight.text = vecsToString(Global.player_right, Global.player_right_atlas)
 	playerDown.text = vecsToString(Global.player_down, Global.player_down_atlas)
@@ -24,4 +31,5 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	update()
+	if Global.debug:
+		update()
