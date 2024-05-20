@@ -1,0 +1,212 @@
+[gd_scene load_steps=23 format=3 uid="uid://dykqk8c5601jm"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_rv4a7"]
+[ext_resource type="Texture2D" uid="uid://dcs2obgk6mhgq" path="res://art/TreasureHunter16x16/png/player/idle/idle1.png" id="2_gnn5x"]
+[ext_resource type="Texture2D" uid="uid://blmute65b8io0" path="res://art/TreasureHunter16x16/png/player/idle/idle2.png" id="3_elhcu"]
+[ext_resource type="Texture2D" uid="uid://dt0spyu6aevgi" path="res://art/TreasureHunter16x16/png/player/idle/idle3.png" id="4_1tlci"]
+[ext_resource type="Texture2D" uid="uid://cg0mw37a03mk5" path="res://art/TreasureHunter16x16/png/player/run/run1.png" id="5_7qatn"]
+[ext_resource type="Texture2D" uid="uid://1snpngyyp8b8" path="res://art/TreasureHunter16x16/png/player/run/run2.png" id="6_yb2rn"]
+[ext_resource type="Texture2D" uid="uid://dm73cj36a45ed" path="res://art/TreasureHunter16x16/png/player/run/run3.png" id="7_0rave"]
+[ext_resource type="Texture2D" uid="uid://m27hvqgpq6ca" path="res://art/TreasureHunter16x16/png/player/run/run4.png" id="8_jrbii"]
+[ext_resource type="Texture2D" uid="uid://bhb2jokxm7a34" path="res://art/TreasureHunter16x16/png/player/run/run5.png" id="9_6cnmi"]
+[ext_resource type="Texture2D" uid="uid://bjarsjeayuyra" path="res://art/TreasureHunter16x16/png/player/run/run6.png" id="10_fj1ys"]
+[ext_resource type="Texture2D" uid="uid://dil8mw8cxlgey" path="res://art/TreasureHunter16x16/png/objects/pickaxe.png" id="11_e0ubc"]
+[ext_resource type="Texture2D" uid="uid://bxemdae3svthh" path="res://art/pike.png" id="12_g1lyd"]
+
+[sub_resource type="Animation" id="Animation_miobk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Miner:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_gnn5x")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PickaxeNode/Pickaxe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.785398]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PickaxeNode/Pickaxe:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5.65685, 2.82843)]
+}
+
+[sub_resource type="Animation" id="Animation_8njkv"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Miner:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_gnn5x"), ExtResource("3_elhcu"), ExtResource("4_1tlci")]
+}
+
+[sub_resource type="Animation" id="Animation_vk6yt"]
+resource_name = "run"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Miner:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [ExtResource("5_7qatn"), ExtResource("6_yb2rn"), ExtResource("7_0rave"), ExtResource("8_jrbii"), ExtResource("9_6cnmi"), ExtResource("10_fj1ys")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iky3u"]
+_data = {
+"RESET": SubResource("Animation_miobk"),
+"idle": SubResource("Animation_8njkv"),
+"run": SubResource("Animation_vk6yt")
+}
+
+[sub_resource type="Animation" id="Animation_fhiyu"]
+resource_name = "mine"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pickaxe:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.785398, 1.1781, 1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pickaxe:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(5.65685, -2.38419e-07), Vector2(5.65685, 2.82843), Vector2(4.24264, 4.24264)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yyow2"]
+_data = {
+"mine": SubResource("Animation_fhiyu")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yl0sp"]
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_djbl0"]
+resource_name = "mine"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pike:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(2, 3), Vector2(3, 3), Vector2(4, 3), Vector2(3, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_ilm3a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pike:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jcpo6"]
+_data = {
+"RESET": SubResource("Animation_ilm3a"),
+"mine": SubResource("Animation_djbl0")
+}
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(326, 175)
+script = ExtResource("1_rv4a7")
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.315, 2.315)
+position_smoothing_enabled = true
+
+[node name="Miner" type="Sprite2D" parent="."]
+texture = ExtResource("2_gnn5x")
+
+[node name="MinerAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_iky3u")
+}
+
+[node name="MinerAnimTree" type="AnimationTree" parent="."]
+anim_player = NodePath("../MinerAnimation")
+
+[node name="PickaxeNode" type="Node2D" parent="."]
+visible = false
+rotation = -0.785398
+
+[node name="Pickaxe" type="Sprite2D" parent="PickaxeNode"]
+position = Vector2(5.65685, 2.82843)
+rotation = 0.785398
+texture = ExtResource("11_e0ubc")
+
+[node name="PickaxeAnimation" type="AnimationPlayer" parent="PickaxeNode"]
+libraries = {
+"": SubResource("AnimationLibrary_yyow2")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yl0sp")
+
+[node name="PikeNode" type="Node2D" parent="."]
+
+[node name="Pike" type="Sprite2D" parent="PikeNode"]
+position = Vector2(2, 3)
+texture = ExtResource("12_g1lyd")
+
+[node name="PikeAnimation" type="AnimationPlayer" parent="PikeNode"]
+libraries = {
+"": SubResource("AnimationLibrary_jcpo6")
+}

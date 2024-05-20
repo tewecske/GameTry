@@ -1,13 +1,22 @@
 extends CharacterBody2D
 
 @onready var cave = $"../Cave"
-@onready var minerAnimation = $MinerAnimation
+@onready var miner_animation = $MinerAnimation
 @onready var miner = $Miner
 @onready var pickaxe = $PickaxeNode/Pickaxe
+@onready var pickaxe_animation = $PickaxeNode/PickaxeAnimation
+@onready var pike_node: Node2D = $PikeNode
+@onready var pike: Sprite2D = $PikeNode/Pike
+@onready var pike_animation: AnimationPlayer = $PikeNode/PikeAnimation
 
 signal collision_cave(player_position: Vector2i, collision_position: Vector2i, collision_normal: Vector2i)
 
 var in_collision = false
+var mining = false
+
+@onready var tool_node := pike_node
+@onready var tool := pike
+@onready var tool_animation := pike_animation
 
 const SPEED = 100.0
 
@@ -17,11 +26,15 @@ func start(pos):
 
 func _ready():
 	set_motion_mode(CharacterBody2D.MOTION_MODE_FLOATING)
-	minerAnimation.play("idle")
-	pickaxe.hide()
+	miner_animation.play("idle")
+	tool.hide()
 	hide()
 
 var last_velocity = Vector2(0.0, 0.0)
+
+func _process(delta: float) -> void:
+	if !tool_animation.is_playing():
+		tool.hide()
 
 func _physics_process(delta):
 
@@ -40,19 +53,14 @@ func _physics_process(delta):
 
 	if velocity.length() > 0:
 		last_velocity = velocity
-		minerAnimation.play("run")
+		miner_animation.play("run")
 	else:
-		minerAnimation.play("idle")
+		miner_animation.play("idle")
 
 	Global.player_direction = Vector2i(directionx, directiony)
 	Global.player_velocity = Vector2i(velocity) / 100
 
 	move_and_slide()
-	
-	var slide_collision_count = get_slide_collision_count()
-	for i in slide_collision_count:
-		var slide_collision = get_slide_collision(i)
-		print("slide_collision " + str(i) + ": " + str(cave.local_to_map(slide_collision.get_position())))
 	
 	#if !in_collision:
 	var collision : KinematicCollision2D = get_last_slide_collision()
@@ -67,6 +75,38 @@ func _physics_process(delta):
 		Global.player_collision_normal = collision_normal
 		collision_cave.emit(local_player_position, collision_position, collision_normal)
 
+func mine_animation():
+	mining = true
+	if !tool_animation.assigned_animation == "mine" or !tool_animation.is_playing():
+		tool.show()
+		print("tool.position " + str(tool.position))
+		if velocity.x < 0:
+			tool.flip_h = true
+			tool.offset.x = -8
+			tool_node.set_rotation_degrees(0)
+			tool_animation.play("mine", -1)
+		elif velocity.x > 0:
+			tool.flip_h = false
+			tool.offset.x = 0
+			tool_node.set_rotation_degrees(0)
+			tool_animation.play("mine")
+		elif velocity.y > 0:
+			tool.flip_h = false
+			if miner.flip_h:
+				tool_node.position.x = 5
+			else:
+				tool_node.position.x = 0
+			tool_node.set_rotation_degrees(90)
+			tool_animation.play("mine")
+		elif velocity.y < 0:
+			tool.flip_h = false
+			if miner.flip_h:
+				tool_node.position.x = -5
+			else:
+				tool_node.position.x = 0
+			tool_node.set_rotation_degrees(-90)
+			tool_animation.play("mine")
 
 func _on_game_collision_ended() -> void:
 	in_collision = false
+

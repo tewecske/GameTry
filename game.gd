@@ -157,6 +157,7 @@ func _on_player_collision_cave(local_player_position: Vector2i, collision_positi
 	
 	#if collision_tile and Global.player_direction == Global.player_location - Global.player_collision_position:
 	if collision_tile and Global.player_direction == Global.player_collision_normal * -1:
+		player.mine_animation()
 		var hp = hps.get(collision_update, 2)
 		print(str(hp))
 		if hp > 0:
